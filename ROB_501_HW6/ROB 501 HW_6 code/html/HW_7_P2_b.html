@@ -1,0 +1,169 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>HW_7_P2_b</title>
+<meta name="generator" content="MATLAB 24.1">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2024-10-10">
+<meta name="DC.source" content="HW_7_P2_b.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<pre class="codeinput">
+<span class="comment">% Load the data</span>
+load(<span class="string">'DataHW06_Prob2.mat'</span>);
+
+<span class="comment">% Set the window size (number of points in the moving window)</span>
+M = 5;  <span class="comment">% Example window size</span>
+
+<span class="comment">% Create an array to store the derivative estimates</span>
+estimated_derivative = zeros(size(y));
+
+<span class="comment">% Loop over the data starting from the M-th point (since we need M points to start)</span>
+<span class="keyword">for</span> k = M:length(t)
+    <span class="comment">% Get the recent M points from the time and y arrays</span>
+    window_time = t(k-M+1:k);  <span class="comment">% Time values in the window</span>
+    window_y = y(k-M+1:k);     <span class="comment">% y values in the window</span>
+
+    <span class="comment">% Perform regression using a polynomial fit (degree 1 for a straight line)</span>
+    <span class="comment">% polyfit returns the coefficients of the best-fitting polynomial</span>
+    p = polyfit(window_time, window_y, 1);
+
+    <span class="comment">% The first coefficient of p is the slope (the derivative estimate at time t_k)</span>
+    estimated_derivative(k) = p(1);
+<span class="keyword">end</span>
+
+<span class="comment">% Plot the estimated derivative versus time</span>
+figure;
+plot(t, estimated_derivative, <span class="string">'b'</span>, <span class="string">'DisplayName'</span>, <span class="string">'Estimated Derivative'</span>);
+hold <span class="string">on</span>;
+
+<span class="comment">% Plot the true derivative (dy) for comparison</span>
+plot(t, dy, <span class="string">'r--'</span>, <span class="string">'DisplayName'</span>, <span class="string">'True Derivative'</span>);
+
+<span class="comment">% Add labels and a legend</span>
+xlabel(<span class="string">'Time t'</span>);
+ylabel(<span class="string">'Derivative'</span>);
+title(<span class="string">'Estimated Derivative vs True Derivative'</span>);
+legend <span class="string">show</span>;
+grid <span class="string">on</span>;
+hold <span class="string">off</span>;
+</pre>
+<img vspace="5" hspace="5" src="HW_7_P2_b_01.png" alt=""> <p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024a</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+% Load the data
+load('DataHW06_Prob2.mat');
+
+% Set the window size (number of points in the moving window)
+M = 5;  % Example window size
+
+% Create an array to store the derivative estimates
+estimated_derivative = zeros(size(y));
+
+% Loop over the data starting from the M-th point (since we need M points to start)
+for k = M:length(t)
+    % Get the recent M points from the time and y arrays
+    window_time = t(k-M+1:k);  % Time values in the window
+    window_y = y(k-M+1:k);     % y values in the window
+    
+    % Perform regression using a polynomial fit (degree 1 for a straight line)
+    % polyfit returns the coefficients of the best-fitting polynomial
+    p = polyfit(window_time, window_y, 1);
+    
+    % The first coefficient of p is the slope (the derivative estimate at time t_k)
+    estimated_derivative(k) = p(1);
+end
+
+% Plot the estimated derivative versus time
+figure;
+plot(t, estimated_derivative, 'b', 'DisplayName', 'Estimated Derivative');
+hold on;
+
+% Plot the true derivative (dy) for comparison
+plot(t, dy, 'rREPLACE_WITH_DASH_DASH', 'DisplayName', 'True Derivative');
+
+% Add labels and a legend
+xlabel('Time t');
+ylabel('Derivative');
+title('Estimated Derivative vs True Derivative');
+legend show;
+grid on;
+hold off;
+
+##### SOURCE END #####
+-->
+</body>
+</html>

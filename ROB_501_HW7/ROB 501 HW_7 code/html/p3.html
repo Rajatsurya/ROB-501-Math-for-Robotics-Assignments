@@ -1,0 +1,317 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      -->
+<title>p3</title>
+<meta name="generator" content="MATLAB 24.1">
+<link rel="schema.DC" href="http://purl.org/dc/elements/1.1/">
+<meta name="DC.date" content="2024-10-17">
+<meta name="DC.source" content="p3.m">
+<style type="text/css">
+html,body,div,span,applet,object,iframe,h1,h2,h3,h4,h5,h6,p,blockquote,pre,a,abbr,acronym,address,big,cite,code,del,dfn,em,font,img,ins,kbd,q,s,samp,small,strike,strong,tt,var,b,u,i,center,dl,dt,dd,ol,ul,li,fieldset,form,label,legend,table,caption,tbody,tfoot,thead,tr,th,td{margin:0;padding:0;border:0;outline:0;font-size:100%;vertical-align:baseline;background:transparent}body{line-height:1}ol,ul{list-style:none}blockquote,q{quotes:none}blockquote:before,blockquote:after,q:before,q:after{content:'';content:none}:focus{outine:0}ins{text-decoration:none}del{text-decoration:line-through}table{border-collapse:collapse;border-spacing:0}
+
+html { min-height:100%; margin-bottom:1px; }
+html body { height:100%; margin:0px; font-family:Arial, Helvetica, sans-serif; font-size:10px; color:#000; line-height:140%; background:#fff none; overflow-y:scroll; }
+html body td { vertical-align:top; text-align:left; }
+
+h1 { padding:0px; margin:0px 0px 25px; font-family:Arial, Helvetica, sans-serif; font-size:1.5em; color:#d55000; line-height:100%; font-weight:normal; }
+h2 { padding:0px; margin:0px 0px 8px; font-family:Arial, Helvetica, sans-serif; font-size:1.2em; color:#000; font-weight:bold; line-height:140%; border-bottom:1px solid #d6d4d4; display:block; }
+h3 { padding:0px; margin:0px 0px 5px; font-family:Arial, Helvetica, sans-serif; font-size:1.1em; color:#000; font-weight:bold; line-height:140%; }
+
+a { color:#005fce; text-decoration:none; }
+a:hover { color:#005fce; text-decoration:underline; }
+a:visited { color:#004aa0; text-decoration:none; }
+
+p { padding:0px; margin:0px 0px 20px; }
+img { padding:0px; margin:0px 0px 20px; border:none; }
+p img, pre img, tt img, li img, h1 img, h2 img { margin-bottom:0px; }
+
+ul { padding:0px; margin:0px 0px 20px 23px; list-style:square; }
+ul li { padding:0px; margin:0px 0px 7px 0px; }
+ul li ul { padding:5px 0px 0px; margin:0px 0px 7px 23px; }
+ul li ol li { list-style:decimal; }
+ol { padding:0px; margin:0px 0px 20px 0px; list-style:decimal; }
+ol li { padding:0px; margin:0px 0px 7px 23px; list-style-type:decimal; }
+ol li ol { padding:5px 0px 0px; margin:0px 0px 7px 0px; }
+ol li ol li { list-style-type:lower-alpha; }
+ol li ul { padding-top:7px; }
+ol li ul li { list-style:square; }
+
+.content { font-size:1.2em; line-height:140%; padding: 20px; }
+
+pre, code { font-size:12px; }
+tt { font-size: 1.2em; }
+pre { margin:0px 0px 20px; }
+pre.codeinput { padding:10px; border:1px solid #d3d3d3; background:#f7f7f7; }
+pre.codeoutput { padding:10px 11px; margin:0px 0px 20px; color:#4c4c4c; }
+pre.error { color:red; }
+
+@media print { pre.codeinput, pre.codeoutput { word-wrap:break-word; width:100%; } }
+
+span.keyword { color:#0000FF }
+span.comment { color:#228B22 }
+span.string { color:#A020F0 }
+span.untermstring { color:#B20000 }
+span.syscmd { color:#B28C00 }
+span.typesection { color:#A0522D }
+
+.footer { width:auto; padding:10px 0px; margin:25px 0px 0px; border-top:1px dotted #878787; font-size:0.8em; line-height:140%; font-style:italic; color:#878787; text-align:left; float:none; }
+.footer p { margin:0px; }
+.footer a { color:#878787; }
+.footer a:hover { color:#878787; text-decoration:underline; }
+.footer a:visited { color:#878787; }
+
+table th { padding:7px 5px; text-align:left; vertical-align:middle; border: 1px solid #d6d4d4; font-weight:bold; }
+table td { padding:7px 5px; text-align:left; vertical-align:top; border:1px solid #d6d4d4; }
+
+
+
+
+
+  </style>
+</head>
+<body>
+<div class="content">
+<pre class="codeinput">A = [1, 0, sqrt(2);
+     0, 2, 0;
+     sqrt(2), 0, 0;];
+
+v1 = [0; 1; 0];  <span class="comment">% Transpose not necessary since it's already a column vector</span>
+
+D1 = A * v1;  <span class="comment">% Matrix-vector multiplication</span>
+D2 = 2 * v1;  <span class="comment">% Scalar multiplication</span>
+
+<span class="comment">% Display results separately</span>
+disp(<span class="string">'D1 = '</span>);
+disp(D1);<span class="comment">% Step A</span>
+
+disp(<span class="string">'D2 = '</span>);
+disp(D2);<span class="comment">% step A</span>
+
+[V,D] = eig(A)
+
+v2 = [0.5774;0;-0.8165;];
+
+v3 = [0.8165;0;0.5774];
+
+dot_v1_v2 = dot(v1, v2);  <span class="comment">% Should be 0</span>
+dot_v1_v3 = dot(v1, v3);  <span class="comment">% Should be 0</span>
+dot_v2_v3 = dot(v2, v3);  <span class="comment">% Should be 0</span>
+
+disp(<span class="string">'Dot product of v1 and v2:'</span>);
+disp(dot_v1_v2);<span class="comment">% Step B</span>
+
+disp(<span class="string">'Dot product of v1 and v3:'</span>);
+disp(dot_v1_v3);<span class="comment">% Step B</span>
+
+disp(<span class="string">'Dot product of v2 and v3:'</span>);
+disp(dot_v2_v3);<span class="comment">% Step B</span>
+
+V = [v1,v2,v3];<span class="comment">% Step B</span>
+
+disp(V);<span class="comment">% Step B</span>
+disp(V'*V);<span class="comment">% Step B</span>
+
+L = V'*A*V;
+
+disp(L);<span class="comment">% Step C</span>
+
+A2 = [-1.0001, 0.0001;
+    0.0001, 2.0001;];
+
+[U2,D1]=eig(A2)<span class="comment">% step D</span>
+disp(U2*U2');<span class="comment">% step D</span>
+
+X = U2'*A2*U2;
+disp(X) <span class="comment">%step D</span>
+
+U = [1, 0, 0;
+    0,-1.000,0;
+    0,0,1.000];<span class="comment">%Step E</span>
+
+disp(U*U');
+
+O = V*U;
+disp(O);
+disp(O*O');<span class="comment">%Step F</span>
+
+Lambda = O'*A*O;
+disp(Lambda);<span class="comment">% step g</span>
+</pre>
+<pre class="codeoutput">D1 = 
+     0
+     2
+     0
+
+D2 = 
+     0
+     2
+     0
+
+
+V =
+
+    0.5774    0.8165         0
+         0         0   -1.0000
+   -0.8165    0.5774         0
+
+
+D =
+
+   -1.0000         0         0
+         0    2.0000         0
+         0         0    2.0000
+
+Dot product of v1 and v2:
+     0
+
+Dot product of v1 and v3:
+     0
+
+Dot product of v2 and v3:
+     0
+
+         0    0.5774    0.8165
+    1.0000         0         0
+         0   -0.8165    0.5774
+
+    1.0000         0         0
+         0    1.0001         0
+         0         0    1.0001
+
+    2.0000         0         0
+         0   -1.0001    0.0001
+         0    0.0001    2.0001
+
+
+U2 =
+
+   -1.0000    0.0000
+    0.0000    1.0000
+
+
+D1 =
+
+   -1.0001         0
+         0    2.0001
+
+     1     0
+     0     1
+
+   -1.0001         0
+         0    2.0001
+
+     1     0     0
+     0     1     0
+     0     0     1
+
+         0   -0.5774    0.8165
+    1.0000         0         0
+         0    0.8165    0.5774
+
+    1.0001         0         0
+         0    1.0000         0
+         0         0    1.0001
+
+    2.0000         0         0
+         0   -1.0001   -0.0001
+         0   -0.0001    2.0001
+
+</pre>
+<p class="footer">
+<br>
+<a href="https://www.mathworks.com/products/matlab/">Published with MATLAB&reg; R2024a</a>
+<br>
+</p>
+</div>
+<!--
+##### SOURCE BEGIN #####
+A = [1, 0, sqrt(2);
+     0, 2, 0;
+     sqrt(2), 0, 0;];
+
+v1 = [0; 1; 0];  % Transpose not necessary since it's already a column vector
+
+D1 = A * v1;  % Matrix-vector multiplication
+D2 = 2 * v1;  % Scalar multiplication
+
+% Display results separately
+disp('D1 = ');
+disp(D1);% Step A
+
+disp('D2 = ');
+disp(D2);% step A
+
+[V,D] = eig(A)
+
+v2 = [0.5774;0;-0.8165;];
+
+v3 = [0.8165;0;0.5774];
+
+dot_v1_v2 = dot(v1, v2);  % Should be 0
+dot_v1_v3 = dot(v1, v3);  % Should be 0
+dot_v2_v3 = dot(v2, v3);  % Should be 0
+
+disp('Dot product of v1 and v2:');
+disp(dot_v1_v2);% Step B
+
+disp('Dot product of v1 and v3:');
+disp(dot_v1_v3);% Step B
+
+disp('Dot product of v2 and v3:');
+disp(dot_v2_v3);% Step B
+
+V = [v1,v2,v3];% Step B
+
+disp(V);% Step B
+disp(V'*V);% Step B
+
+L = V'*A*V;
+
+disp(L);% Step C
+
+A2 = [-1.0001, 0.0001;
+    0.0001, 2.0001;];
+
+[U2,D1]=eig(A2)% step D
+disp(U2*U2');% step D
+
+X = U2'*A2*U2;
+disp(X) %step D
+
+U = [1, 0, 0;
+    0,-1.000,0;
+    0,0,1.000];%Step E
+
+disp(U*U');
+
+O = V*U;
+disp(O);
+disp(O*O');%Step F
+
+Lambda = O'*A*O;
+disp(Lambda);% step g 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+##### SOURCE END #####
+-->
+</body>
+</html>
